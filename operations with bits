@@ -1,0 +1,31 @@
+and, or, xor, not, test
+test == and, но не записывает результат в операнд
+and eax, 0 //eax == 0
+test eax, 0 //eax is the same
+// test меняет флаги, OF = CF = 0
+test eax, 1 //чётность, check for ZF
+    
+shl, sal // << , sal(arythmetical), sal == shl
+shr, sar // >> , sar(arythmetical)
+
+// shl r/m, r/m8 (byte)
+// r == CL
+    
+al -> 10110011
+shr al, 1 // 01011001, CF = 1 (shl as well)
+sar al, 1 // 11011001
+
+ror, rcr
+rol, rcl
+
+ror, rol -> циклический сдвиг, в CF значение последнего бита
+
+al -> 10110010(1)
+rcr al, 1 //11011001(0)
+
+//bts r/m, r/m/i , bit set
+bts eax, 7 // 7th bit to 1, CF = 1
+btc //bit complement, inverse
+btr //bit reset, bit to 0, CF = 0
+bt // CF = данный бит
+setc //set CF

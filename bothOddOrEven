@@ -1,0 +1,19 @@
+%include "io.inc"
+section .text
+global CMAIN
+CMAIN:
+    ;write your code here
+    
+    GET_DEC 4, eax
+    GET_DEC 4, ebx
+    
+    and eax, 1
+    and ebx, 1
+    xor eax, ebx
+    test eax, 1
+    jnz .end
+    
+    PRINT_STRING "Yes"    
+    .end:
+    xor eax, eax
+    ret

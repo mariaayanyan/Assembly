@@ -1,0 +1,116 @@
+%include "io.inc"
+section .bss
+    Min resd 500000
+    Max resd 500000
+
+section .data
+    M dd 0
+    m dd 0
+
+isMin:
+    xor eax, eax
+    cmp ebx, edi
+    jge fin1
+    cmp ebx, edx
+    jge fin1
+    inc eax
+    
+    fin1:
+    ret
+
+isMax:
+    xor eax, eax
+    cmp ebx, edi
+    jle fin2
+    cmp ebx, edx
+    jle fin2
+    inc eax
+    
+    fin2:
+    ret
+
+section .text
+global CMAIN
+CMAIN:
+    mov ebp, esp; for correct debugging
+    ;write your code here
+    GET_DEC 4, ecx
+    
+    cmp ecx, 3
+    jge ok
+    PRINT_DEC 4, 0
+    NEWLINE
+    PRINT_DEC 4, 0 
+    jmp fin
+    
+    ok: 
+    GET_DEC 4, edi
+    GET_DEC 4, ebx
+    sub ecx, 2
+    mov esi, 1
+    
+    ;edi, ebx, edx
+    .l1:
+    GET_DEC 4, edx
+    call isMin
+    
+    test eax, eax
+    jz .mx
+    mov eax, [m]
+    mov [Min + 4*eax], esi
+    inc dword[m]
+    
+    .mx:
+    call isMax
+    test eax, eax
+    jz .inc
+    mov eax, [M]
+    mov [Max + 4*eax], esi
+    inc dword[M]
+    
+    .inc:
+    inc esi
+    dec ecx
+    mov edi, ebx
+    mov ebx, edx
+    test ecx, ecx
+    jnz .l1
+    
+    PRINT_DEC 4, [m]
+    NEWLINE
+    
+    xor eax, eax
+    mov ecx, [m]
+    test ecx, ecx
+    jz .check
+    
+    .p1:
+    PRINT_DEC 4, [Min + eax]
+    PRINT_CHAR ' '
+    add eax, 4 
+    dec ecx
+    test ecx, ecx 
+    jnz .p1 
+          
+    NEWLINE
+    
+    .check:
+    PRINT_DEC 4, [M]
+    NEWLINE    
+    
+    xor eax, eax
+    mov ecx, [M]
+    test ecx, ecx
+    jz fin
+    
+    .p2:
+    PRINT_DEC 4, [Max + eax]
+    PRINT_CHAR ' '
+    add eax, 4
+    dec ecx
+    test ecx, ecx 
+    jnz .p2 
+     
+    fin:
+    xor eax, eax
+    ret

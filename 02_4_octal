@@ -1,0 +1,27 @@
+%include "io.inc"
+section .bss
+    arr resd 16
+section .text
+global CMAIN
+CMAIN:
+    mov ebp, esp; for correct debugging
+    GET_UDEC 4, eax
+    xor ecx, ecx    
+.l1:
+    mov ebx, 7
+    and ebx, eax    
+    mov [arr + 4*ecx], ebx
+    shr eax, 3
+    test eax, eax
+    jz .print
+    inc ecx    
+    jmp .l1
+
+.print:
+    PRINT_DEC 4, [arr + 4*ecx]
+    dec ecx
+    cmp ecx, 0    
+    jge .print
+        
+    xor eax, eax
+    ret

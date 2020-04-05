@@ -1,0 +1,41 @@
+jmp - безусловный переход
+jcc - conditional jump
+
+jg - greater (signed)
+ja - above (unsigned)
+
+jl - less (signed)
+jb - below (unsigned)
+je - equal
+
+//if(a > 5) 
+cmp a, 5
+jle .l1
+{
+    //if body
+}
+.l1: ...
+
+mov
+cmov cc
+
+cmp a, 5
+cmovle ebx, eax
+
+loop метка == if(--eсx) jmp метка
+loope == loopz
+loopne == loopnz
+
+//for(int i = 10; i != 0; --i)
+
+mov eax, 10
+.l1:
+    add eax, 5
+
+
+do ... while == 
+                .l1
+                ;
+                ;
+                ;
+                loop .l1            
