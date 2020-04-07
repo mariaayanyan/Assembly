@@ -1,4 +1,4 @@
-%include "io.inc"
+    %include "io.inc"
 section .bss
     a resd 10000
     b resd 10000
@@ -88,34 +88,38 @@ CMAIN:
     call input
    
     xor eax, eax
-    xor ebx, ebx
-    xor ecx, ecx    
-    xor esi, esi
-    xor edi, edi  
-.i:    
-    xor ebx, ebx
-    mov edx,    
-.k:
+    xor esi, esi  
+.i: ;eax   
+    xor ebx, ebx  
+.j: ;ebx
     xor ecx, ecx
-    mov [c + esi], 0
-.j:
+    mov dword[c + esi], 0
+.l: ;ecx
+    mov edx, [m]
+    imul edx, eax
+    add edx, ecx
+    mov edx, [a+4*edx]
     
-    
+    mov edi, [k]
+    imul edi, ecx
+    add edi, ebx
+    mov edi, [b+4*edi]
+     
+    imul edx, edi
+    add [c+esi], edx  
     
     inc ecx
     cmp ecx, [m]
-    jl .j
+    jl .l
     
     add esi, 4
     inc ebx
     cmp ebx, [k]
-    jl .k
+    jl .j
     
     inc eax
     cmp eax, [n]
     jl .i
-    
-    
     
     
     push c
