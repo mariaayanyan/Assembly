@@ -1,0 +1,33 @@
+%include "io.inc"
+section .text
+global CMAIN
+CMAIN:
+    mov ebp, esp; for correct debugging
+    GET_DEC 4, ecx; n
+    GET_DEC 4, edx; k
+    xor edi, edi; ans
+    mov eax, 1
+.l1:
+    mov ebx, eax
+    xor esi, esi
+    .l2:
+        test ebx, 1
+        jnz .sk
+        inc esi
+        .sk:
+        shr ebx, 1
+        test ebx, ebx
+        jnz .l2
+    
+    cmp esi, edx
+    jne .inc
+    inc edi
+    .inc:
+    inc eax
+    cmp eax, ecx
+    jle .l1
+           
+    PRINT_DEC 4, edi    
+        
+    xor eax, eax
+    ret
